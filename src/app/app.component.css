@@ -1,0 +1,107 @@
+section {
+    display: table;
+  }
+  
+  .example-label {
+    display: table-cell;
+    font-size: 14px;
+    margin-left: 8px;
+    min-width: 120px;
+  }
+  
+  .example-button-row {
+    display: table-cell;
+    max-width: 600px;
+  }
+
+  
+  
+  .example-button-row .mat-mdc-button-base {
+    margin: 8px 8px 8px 0;
+  }
+  
+  .example-flex-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  .example-button-container {
+    display: flex;
+    justify-content: center;
+    width: 140px;
+  }
+  
+section:first-of-type .example-button-row button:nth-child(1) { color: black;  } 
+section:first-of-type .example-button-row button:nth-child(2) { color: blue; } 
+section:first-of-type .example-button-row button:nth-child(3) {  color: rgb(255, 1, 208); } 
+section:first-of-type .example-button-row button:nth-child(4) {  color: red; } 
+section:first-of-type .example-button-row button:nth-child(5) {  color: darkgray; } 
+section:first-of-type .example-button-row a { color: black; } 
+
+.second-section .example-button-row button,
+.second-section .example-button-row a {
+  border-radius: 10px;
+}
+.second-section .example-button-row button:nth-child(1) { background-color: white; color: black; }
+.second-section .example-button-row button:nth-child(2) { background-color: blue; color: white; }
+.second-section .example-button-row button:nth-child(3) { background-color: rgb(255, 1, 208); color: white; }
+.second-section .example-button-row button:nth-child(4) { background-color: red; color: white; }
+.second-section .example-button-row button:nth-child(5) { background-color: rgb(241, 238, 238); color: darkgray; }
+.second-section .example-button-row a { background-color: white; color: black; }
+
+
+.third-section .example-button-row button,
+.third-section .example-button-row a {
+  border-radius: 10px;
+}
+.third-section .example-button-row button:nth-child(1) { background-color: white; color: black; }
+.third-section .example-button-row button:nth-child(2) { background-color: white; color: blue; }
+.third-section .example-button-row button:nth-child(3) { background-color:white; color:rgb(255, 1, 208); }
+.third-section .example-button-row button:nth-child(4) { background-color:white; color: red; }
+.third-section .example-button-row button:nth-child(5) { background-color: white; color: darkgray; }
+.third-section .example-button-row a { background-color: white; color: black; }
+
+.first-line button:nth-child(1) mat-icon { color: black;  }    
+.first-line button:nth-child(2) mat-icon { color: blue;  }   
+.first-line button:nth-child(3) mat-icon { color: rgb(255, 1, 208); }
+.first-line button:nth-child(4) mat-icon { color: red; }
+.first-line button:nth-child(5) mat-icon { color: darkgray; }
+
+.first-line {
+  display: flex;
+  gap: 80px; /* Ajoute un espace de 16px entre chaque élément */
+}
+
+.increment-badge{
+  font-size: 25px;
+}
+
+.delete-button{
+  background-color: blue;
+  color: white;
+  border-radius: 50px;
+
+}
+
+.bookmark-button{
+  background-color: rgb(255, 1, 208);
+  color: white;
+  border-radius: 50px;
+
+}
+
+.home-button{
+  background-color: red;
+  color: white;
+  border-radius: 50px;
+
+}
+
+.favorite-button{
+  background-color: darkgray;
+  color: white;
+  border-radius: 50px;
+
+}
+
