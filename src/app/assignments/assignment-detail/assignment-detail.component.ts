@@ -13,11 +13,16 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './assignment-detail.component.css'
 })
 export class AssignmentDetailComponent {
-  @Input() assignmentTransmis!: Assignment; // Déclarer la propriété @Input()
+  @Input() assignmentTransmis: Assignment; // Déclarer la propriété @Input()
   @Output() deleteAssignment = new EventEmitter<Assignment>();
   
-  constructor(private assignmentsService: AssignmentsService) {}
-  ngOnInit(): void {
+  constructor(private assignmentsService: AssignmentsService) {
+    this.assignmentTransmis = {
+      nom: '',
+      dateDeRendu: new Date(),
+      rendu: false
+    };
+  }  ngOnInit(): void {
   }
 
   onCheckboxChange() {
@@ -27,6 +32,10 @@ export class AssignmentDetailComponent {
   }
 
   onDelete(){
+    this.assignmentsService.deleteAssignment(this.assignmentTransmis).subscribe((message) => {
+      console.log(message);
+    });
+    
     this.deleteAssignment.emit(this.assignmentTransmis);
   }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Assignment } from './assignments/assignment.model';
 import { Observable,of  } from 'rxjs';
+import { LoggingService } from './logging.service';
 
 
 
@@ -22,7 +23,7 @@ export class AssignmentsService {
     }
   ];
 
-  constructor() {}
+  constructor(private loggingService:LoggingService) {}
 
   // Récupérer tous les assignments
   getAssignments(): Observable<Assignment[]> {
@@ -32,6 +33,7 @@ export class AssignmentsService {
   // Ajouter un nouvel assignment
   addAssignment(assignment: Assignment): Observable<string> {
     this.assignments.push(assignment);
+    this.loggingService.log(assignment.nom + ' a été ajouté !');
     return of('Assignment ajouté !');
   }
 
@@ -47,4 +49,6 @@ export class AssignmentsService {
     // Mais comme on travaille avec un tableau local, aucune action supplémentaire n'est nécessaire
     return of("Assignment service: assignment modifié !");
   }
+
+
 }
