@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
+import { AssignmentsService } from '../../assignments.service';
 
 @Component({
   selector: 'app-add-assignment',
@@ -16,13 +17,14 @@ import { MatListModule } from '@angular/material/list';
   templateUrl: './add-assignment.component.html',
   styleUrl: './add-assignment.component.css'
 })
-export class AddAssignmentComponent {
+export class AddAssignmentComponent implements OnInit {
   @Output() nouvelAssignment = new EventEmitter<Assignment>();
   nomDevoir:string="";
   dateRendu: Date = new Date();
   ajouteActive = false;
 
-  constructor() { }
+  constructor(private assignmentsService: AssignmentsService) {}
+
   ngOnInit():void{
     setTimeout(() => {
       this.ajouteActive = true;
@@ -35,6 +37,8 @@ export class AddAssignmentComponent {
     newAssignment.dateDeRendu = this.dateRendu;
     newAssignment.rendu = false;
     
+    this.assignmentsService.addAssignment(newAssignment);
+
     this.nouvelAssignment.emit(newAssignment);
 
   }

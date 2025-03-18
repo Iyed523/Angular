@@ -14,8 +14,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import{AssignmentDetailComponent} from './assignment-detail/assignment-detail.component';
 import { MatListModule } from '@angular/material/list';
 import { AddAssignmentComponent } from './add-assignment/add-assignment.component';
-
-
+import {AssignmentsService} from '../assignments.service';
 @Component({
   selector: 'app-assignments',
   imports: [CommonModule,RenduDirective,NonrenduDirective,FormsModule, 
@@ -27,7 +26,7 @@ import { AddAssignmentComponent } from './add-assignment/add-assignment.componen
 })
 
 
-export class AssignmentsComponent {
+export class AssignmentsComponent implements OnInit {
   titre = "Mon application sur les Assignments !"
   ajouteActive = false;
   nomDevoir:string="";
@@ -35,24 +34,27 @@ export class AssignmentsComponent {
   assignmentSelectionne!:Assignment;
   formVisible = false;
 
+  // Déclarer la propriété sans initialisation
+  assignments!: Assignment[];
 
-  assignments: Assignment[] = [
-    {
-      nom: 'Devoir Angular',
-      dateDeRendu: new Date('2021-03-01'),
-      rendu: true
-    },
-    {
-      nom: 'Devoir TypeScript',
-      dateDeRendu: new Date('2021-03-15'),
-      rendu: false
-    }
-  ]; // Ensure the array is typed correctly
+  // Initialiser dans le constructeur
+  constructor(private assignmentsService: AssignmentsService) {}
 
+ 
+
+  
   ngOnInit():void{
+    //this.assignments = this.assignmentsService.getAssignments();    
+    this.getAssignments();
+
     setTimeout(() => {
       this.ajouteActive = true;
     }, 2000);
+  }
+
+  getAssignments(){
+    this.assignmentsService.getAssignments()
+      .subscribe(assignments => this.assignments = assignments);
   }
   onSubmit() {
     const newAssignment = new Assignment();
@@ -61,6 +63,8 @@ export class AssignmentsComponent {
     newAssignment.rendu = false;
     
     this.assignments.push(newAssignment);
+    this.assignmentsService.addAssignment(newAssignment);
+
 
   }
 
@@ -69,8 +73,11 @@ export class AssignmentsComponent {
   }
 
   onDeleteAssignment(assignment: Assignment) {
-    this.assignments = this.assignments.filter(a => a !== assignment);
-    this.assignmentSelectionne = null!; 
+    this.assignmentsService.deleteAssignment(assignment).subscribe((message) => {
+      console.log(message); // Afficher le message de confirmation
+      this.assignments = this.assignments.filter(a => a !== assignment); // Mettre à jour la liste locale
+      this.assignmentSelectionne = null!; // Désélectionner l'assignment supprimé
+    });
   }
  
  
@@ -88,7 +95,8 @@ export class AssignmentsComponent {
     this.formVisible = true;
   }
   onNouvelAssignment(event:Assignment) {
-    this.assignments.push(event);
+    //this.assignments.push(event);
+    this.assignmentsService.addAssignment(event).subscribe(message => console.log(message));
     this.formVisible = false;
   }
 }

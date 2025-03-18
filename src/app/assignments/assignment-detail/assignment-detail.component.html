@@ -2,6 +2,7 @@
     <mat-card-content>
         <mat-card-title>{{assignmentTransmis.nom}}</mat-card-title>
         <mat-card-subtitle>{{assignmentTransmis.dateDeRendu | date : 'dd/MM/yyyy'}}</mat-card-subtitle>
+        <mat-checkbox [(ngModel)]="assignmentTransmis.rendu" (change)="onCheckboxChange()"> {{ assignmentTransmis.rendu ? 'Rendu' : 'Non rendu' }}</mat-checkbox>
     </mat-card-content>
     <button mat-raised-button color="primary" (click)="onDelete()">Delete</button>
 </mat-card>
