@@ -12,12 +12,20 @@ export class AssignmentsService {
 
   assignments: Assignment[] = [
     {
-      nom: 'Devoir Angular',
+      id:1,
+      nom: 'TP1 sur WebComponents, un lecteur audio amélioré',
       dateDeRendu: new Date('2021-03-01'),
       rendu: true
     },
     {
-      nom: 'Devoir TypeScript',
+      id:2,
+      nom: 'TP2 sur Angular, un joli gestionnaire de devoirs (Asseingments)',
+      dateDeRendu: new Date('2021-03-15'),
+      rendu: false
+    },
+    {
+      id:3,
+      nom: 'TP3 sur Angular, utilisation duu router et de ',
       dateDeRendu: new Date('2021-03-15'),
       rendu: false
     }
@@ -30,10 +38,15 @@ export class AssignmentsService {
     return of(this.assignments);
   }
 
+  getAssignment(id:number):Observable<Assignment|undefined>{
+    const a:Assignment|undefined = this.assignments.find(a => a.id === id);
+    return of(a);
+  }
+
   // Ajouter un nouvel assignment
   addAssignment(assignment: Assignment): Observable<string> {
     this.assignments.push(assignment);
-    this.loggingService.log(assignment.nom + ' a été ajouté !');
+    this.loggingService.log(assignment.nom, 'a été ajouté !');
     return of('Assignment ajouté !');
   }
 

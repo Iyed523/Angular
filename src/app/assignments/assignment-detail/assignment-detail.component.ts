@@ -5,6 +5,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AssignmentsService } from '../../assignments.service';
 import { FormsModule } from '@angular/forms';  
+import { ActivatedRoute,Router } from '@angular/router';
 
 @Component({
   selector: 'app-assignment-detail',
@@ -13,22 +14,20 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './assignment-detail.component.css'
 })
 export class AssignmentDetailComponent {
-  @Input() assignmentTransmis: Assignment; // Déclarer la propriété @Input()
+ /*@Input()*/ assignmentTransmis!: Assignment; // Déclarer la propriété @Input()
   @Output() deleteAssignment = new EventEmitter<Assignment>();
   
-  constructor(private assignmentsService: AssignmentsService) {
-    this.assignmentTransmis = {
-      nom: '',
-      dateDeRendu: new Date(),
-      rendu: false
-    };
-  }  ngOnInit(): void {
+  constructor(private assignmentsService: AssignmentsService,private route: ActivatedRoute,
+    private router: Router) {}  
+  ngOnInit(): void {
+    this.getAssignment ();
   }
 
   onCheckboxChange() {
     this.assignmentsService.updateAssignment(this.assignmentTransmis).subscribe((message) => {
       console.log(message); // Afficher le message de confirmation
     });
+    this.router.navigate(['/home']);
   }
 
   onDelete(){
@@ -37,7 +36,19 @@ export class AssignmentDetailComponent {
     });
     
     this.deleteAssignment.emit(this.assignmentTransmis);
+    this.router.navigate(['/home']);
   }
+    
 
+  getAssignment() {
+    const id = +this.route.snapshot.params['id']; // Récupérer l'ID de l'URL
+    this.assignmentsService.getAssignment(id).subscribe((assignment) => {
+      if (assignment) {
+        this.assignmentTransmis = assignment; // Assigner seulement si assignment est défini
+      } else {
+        console.error('Assignment non trouvé'); // Gérer le cas où assignment est undefined
+      }
+    });
+  }
   
 }

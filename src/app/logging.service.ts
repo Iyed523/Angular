@@ -7,7 +7,7 @@ export class LoggingService {
 
   constructor() { }
 
-  log(message: string): void {
-    console.log(message); // Afficher le message dans la console
+  log(asseignmentName: string, action: string): void {
+    console.log("Assignment " + asseignmentName + " " + action);
   }
 }

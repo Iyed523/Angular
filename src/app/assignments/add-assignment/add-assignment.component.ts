@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { AssignmentsService } from '../../assignments.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-add-assignment',
@@ -18,12 +20,13 @@ import { AssignmentsService } from '../../assignments.service';
   styleUrl: './add-assignment.component.css'
 })
 export class AddAssignmentComponent implements OnInit {
-  @Output() nouvelAssignment = new EventEmitter<Assignment>();
+  //@Output() nouvelAssignment = new EventEmitter<Assignment>();
   nomDevoir:string="";
   dateRendu: Date = new Date();
   ajouteActive = false;
 
-  constructor(private assignmentsService: AssignmentsService) {}
+  constructor(private assignmentsService: AssignmentsService,    
+    private router: Router) {}
 
   ngOnInit():void{
     setTimeout(() => {
@@ -37,9 +40,11 @@ export class AddAssignmentComponent implements OnInit {
     newAssignment.dateDeRendu = this.dateRendu;
     newAssignment.rendu = false;
     
-    this.assignmentsService.addAssignment(newAssignment);
-
-    this.nouvelAssignment.emit(newAssignment);
+    this.assignmentsService.addAssignment(newAssignment).subscribe(() => {
+      // Redirigez l'utilisateur vers la liste des assignments après l'ajout
+      this.router.navigate(['/home']);
+    });
+    //this.nouvelAssignment.emit(newAssignment);
 
   }
 

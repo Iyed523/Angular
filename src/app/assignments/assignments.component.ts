@@ -15,10 +15,11 @@ import{AssignmentDetailComponent} from './assignment-detail/assignment-detail.co
 import { MatListModule } from '@angular/material/list';
 import { AddAssignmentComponent } from './add-assignment/add-assignment.component';
 import {AssignmentsService} from '../assignments.service';
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-assignments',
   imports: [CommonModule,RenduDirective,NonrenduDirective,FormsModule, 
-    MatButtonModule, MatInputModule, MatDatepickerModule, MatFormFieldModule,AssignmentDetailComponent,AddAssignmentComponent,MatListModule,
+    MatButtonModule, MatInputModule, MatDatepickerModule, MatFormFieldModule,MatListModule,RouterLink 
   ],
   providers: [provideNativeDateAdapter()], // Ajoutez cette ligne
   templateUrl: './assignments.component.html',
@@ -62,7 +63,7 @@ export class AssignmentsComponent implements OnInit {
     newAssignment.dateDeRendu = this.dateRendu;
     newAssignment.rendu = false;
     
-    this.assignments.push(newAssignment);
+    //this.assignments.push(newAssignment);
     this.assignmentsService.addAssignment(newAssignment);
 
 
@@ -74,9 +75,11 @@ export class AssignmentsComponent implements OnInit {
 
   onDeleteAssignment(assignment: Assignment) {
     this.assignmentsService.deleteAssignment(assignment).subscribe((message) => {
-      console.log(message); // Afficher le message de confirmation
-      this.assignments = this.assignments.filter(a => a !== assignment); // Mettre à jour la liste locale
-      this.assignmentSelectionne = null!; // Désélectionner l'assignment supprimé
+      console.log(message); 
+  
+      this.assignments = this.assignments.filter(a => a !== assignment);
+  
+      this.assignmentSelectionne = null!;
     });
   }
  
@@ -92,13 +95,17 @@ export class AssignmentsComponent implements OnInit {
   }
 
   onAddAssignmentBtnClick() {
-    this.formVisible = true;
+    //this.formVisible = true;
   }
+ /* 
   onNouvelAssignment(event:Assignment) {
-    //this.assignments.push(event);
     this.assignmentsService.addAssignment(event).subscribe(message => console.log(message));
     this.formVisible = false;
+
+    this.assignments.push(event);
+
   }
+    */
 }
 
 

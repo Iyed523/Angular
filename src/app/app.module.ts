@@ -19,6 +19,9 @@ import { AssignmentsComponent } from './assignments/assignments.component';
 import { RenduDirective } from './assignments/rendu.directive';
 import { NonrenduDirective } from './assignments/nonrendu.directive';
 import { FormsModule } from '@angular/forms';  
+import { RouterModule } from '@angular/router';
+import { routes } from './app.routes';
+
 
 
 @NgModule({
@@ -45,7 +48,9 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     MatDividerModule,
     MatListModule,
+    RouterModule.forRoot(routes) // Configurez les routes ici
     
+
   ],
   providers: [provideNativeDateAdapter()],
   bootstrap: [AppComponent]
