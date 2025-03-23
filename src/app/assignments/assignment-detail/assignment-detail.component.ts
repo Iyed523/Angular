@@ -6,10 +6,14 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { AssignmentsService } from '../../assignments.service';
 import { FormsModule } from '@angular/forms';  
 import { ActivatedRoute,Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { AuthService } from '../auth.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 
 @Component({
   selector: 'app-assignment-detail',
-  imports: [CommonModule,MatCardModule,MatCheckboxModule,FormsModule],
+  imports: [CommonModule,MatCardModule,MatCheckboxModule,FormsModule,MatFormFieldModule],
   templateUrl: './assignment-detail.component.html',
   styleUrl: './assignment-detail.component.css'
 })
@@ -18,7 +22,7 @@ export class AssignmentDetailComponent {
   @Output() deleteAssignment = new EventEmitter<Assignment>();
   
   constructor(private assignmentsService: AssignmentsService,private route: ActivatedRoute,
-    private router: Router) {}  
+    private router: Router, private authService: AuthService ) {}  
   ngOnInit(): void {
     this.getAssignment ();
   }
@@ -49,6 +53,20 @@ export class AssignmentDetailComponent {
         console.error('Assignment non trouvé'); // Gérer le cas où assignment est undefined
       }
     });
+  }
+
+  onClickEdit() {
+    this.router.navigate(["/assignment", this.assignmentTransmis.id, "edit"],
+      {queryParams: {nom: this.assignmentTransmis.nom,fragment: 'edition'}}
+    );
+  }
+
+  isAdmin(): boolean {
+    return this.authService.isAdmin(); // Utilisez la méthode isAdmin() du service
+  }
+
+  isLogged(): boolean {
+    return this.authService.isLogged(); // Utilisez la méthode isLogged() du service
   }
   
 }

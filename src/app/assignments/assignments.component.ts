@@ -16,10 +16,12 @@ import { MatListModule } from '@angular/material/list';
 import { AddAssignmentComponent } from './add-assignment/add-assignment.component';
 import {AssignmentsService} from '../assignments.service';
 import { RouterLink } from '@angular/router';
+import {EditAssignmentComponent} from './edit-assignment/edit-assignment.component';
+import { LoginComponent } from './login/login.component';
 @Component({
   selector: 'app-assignments',
   imports: [CommonModule,RenduDirective,NonrenduDirective,FormsModule, 
-    MatButtonModule, MatInputModule, MatDatepickerModule, MatFormFieldModule,MatListModule,RouterLink 
+    MatButtonModule, MatInputModule, MatDatepickerModule, MatFormFieldModule,MatListModule,RouterLink,EditAssignmentComponent,LoginComponent 
   ],
   providers: [provideNativeDateAdapter()], // Ajoutez cette ligne
   templateUrl: './assignments.component.html',
@@ -34,6 +36,7 @@ export class AssignmentsComponent implements OnInit {
   dateRendu: Date = new Date();
   assignmentSelectionne!:Assignment;
   formVisible = false;
+  //id=0;
 
   // Déclarer la propriété sans initialisation
   assignments!: Assignment[];
@@ -62,6 +65,7 @@ export class AssignmentsComponent implements OnInit {
     newAssignment.nom = this.nomDevoir;
     newAssignment.dateDeRendu = this.dateRendu;
     newAssignment.rendu = false;
+    //newAssignment.id = this.id++;
     
     //this.assignments.push(newAssignment);
     this.assignmentsService.addAssignment(newAssignment);

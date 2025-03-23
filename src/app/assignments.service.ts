@@ -9,6 +9,7 @@ import { LoggingService } from './logging.service';
   providedIn: 'root'
 })
 export class AssignmentsService {
+  private lastId = 3;
 
   assignments: Assignment[] = [
     {
@@ -45,6 +46,7 @@ export class AssignmentsService {
 
   // Ajouter un nouvel assignment
   addAssignment(assignment: Assignment): Observable<string> {
+    assignment.id = this.generateId();
     this.assignments.push(assignment);
     this.loggingService.log(assignment.nom, 'a été ajouté !');
     return of('Assignment ajouté !');
@@ -61,6 +63,10 @@ export class AssignmentsService {
     // Ici, on pourrait envoyer une requête PUT à une base de données
     // Mais comme on travaille avec un tableau local, aucune action supplémentaire n'est nécessaire
     return of("Assignment service: assignment modifié !");
+  }
+
+  private generateId(): number {
+    return ++this.lastId;
   }
 
 

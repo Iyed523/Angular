@@ -21,6 +21,14 @@ import { NonrenduDirective } from './assignments/nonrendu.directive';
 import { FormsModule } from '@angular/forms';  
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
+import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assignment.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { LoginComponent } from './assignments/login/login.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+
+
+
 
 
 
@@ -48,7 +56,12 @@ import { routes } from './app.routes';
     FormsModule,
     MatDividerModule,
     MatListModule,
-    RouterModule.forRoot(routes) // Configurez les routes ici
+    RouterModule.forRoot(routes),// Configurez les routes ici
+    MatSlideToggleModule,
+    LoginComponent,
+    MatToolbarModule,
+    MatSidenavModule
+
     
 
   ],

@@ -1,11 +1,17 @@
 <mat-card *ngIf="assignmentTransmis">
+    <mat-card-title>{{ assignmentTransmis.nom }}</mat-card-title>
     <mat-card-content>
-        <mat-card-title>{{assignmentTransmis.nom}}</mat-card-title>
-        <mat-card-subtitle>{{assignmentTransmis.dateDeRendu | date : 'dd/MM/yyyy'}}</mat-card-subtitle>
-        <mat-checkbox [(ngModel)]="assignmentTransmis.rendu" (change)="onCheckboxChange()"> {{ assignmentTransmis.rendu ? 'Rendu' : 'Non rendu' }}</mat-checkbox>
+      <p>Date de rendu : {{ assignmentTransmis.dateDeRendu | date }}</p>
+      <mat-checkbox
+        [checked]="assignmentTransmis.rendu"
+        (change)="onCheckboxChange()"
+      >
+        Rendu
+      </mat-checkbox>
     </mat-card-content>
-    <button mat-raised-button color="primary" (click)="onDelete()">Delete</button>
-</mat-card>
-
-
-
+    <mat-card-actions>
+      <button mat-stroked-button color="primary" (click)="onClickEdit()" [disabled]="!isAdmin()">Edit</button>
+      <button mat-stroked-button color="warn" (click)="onDelete()" [disabled]="!isAdmin()">Delete</button>
+      <p *ngIf="!isAdmin()" class="error-message">Vous n'avez pas les droits nécessaires pour modifier ou supprimer cet assignment.</p>
+    </mat-card-actions>
+  </mat-card>

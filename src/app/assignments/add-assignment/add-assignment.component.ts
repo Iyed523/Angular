@@ -11,10 +11,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { AssignmentsService } from '../../assignments.service';
 import { Router } from '@angular/router';
+import {provideNativeDateAdapter} from '@angular/material/core';
 
 
 @Component({
   selector: 'app-add-assignment',
+  providers: [provideNativeDateAdapter()],
   imports: [MatDatepickerModule,FormsModule,MatFormFieldModule,MatInputModule,MatButtonModule,MatListModule,CommonModule],
   templateUrl: './add-assignment.component.html',
   styleUrl: './add-assignment.component.css'

@@ -1,5 +1,5 @@
 
-
+<app-login></app-login>
 <form ngForm (submit)="onSubmit(); assignmentForm.reset()" #assignmentForm>
 
    
@@ -34,8 +34,8 @@
 
     <mat-list *ngFor="let assignment of assignments">
         <nav>
-            <a routerLink="/assignment/{{assignment.id}}">
-            <h3 mat-subheader>{{assignment.dateDeRendu | date}}</h3>
+            <a [routerLink]="['/assignment', assignment.id]">
+                <h3 mat-subheader>{{assignment.dateDeRendu | date}}</h3>
             <mat-list-item (click)="assignmentClique(assignment)">
                 <p appRendu *ngIf="assignment.rendu; else nonRendu">
                     Devoir {{assignment.nom}} a été rendu.
@@ -54,6 +54,8 @@
     <app-assignment-detail [assignmentTransmis]="assignmentSelectionne" (deleteAssignment)="onDeleteAssignment($event)" ></app-assignment-detail>
     -->
 
+    <app-edit-assignment></app-edit-assignment>
+
 
 </main>
 
@@ -62,3 +64,5 @@
 <!--
 <app-add-assignment (nouvelAssignment)="onNouvelAssignment ($event)" *ngIf="formVisible"></app-add-assignment>
 -->
+
+
