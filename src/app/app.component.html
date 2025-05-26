@@ -4,6 +4,10 @@
   </button>
   <span>Mon Application</span>
   <span class="spacer"></span>
+   <button mat-button *ngIf="isLogged()" (click)="genererDonneesDeTest()">
+    <mat-icon>storage</mat-icon>
+    Peupler BD
+  </button>
   <button mat-button *ngIf="isLogged()" (click)="logout()">
     <mat-icon>logout</mat-icon>
     Déconnexion
@@ -24,10 +28,12 @@
         <mat-icon>assignment</mat-icon>
         Assignments
       </a>
+      
       <a mat-list-item routerLink="/login" *ngIf="!isLogged()">
         <mat-icon>login</mat-icon>
         Connexion
       </a>
+      
     </mat-nav-list>
   </mat-sidenav>
   
