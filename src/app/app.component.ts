@@ -14,6 +14,7 @@ import { AuthService } from './assignments/auth.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { AssignmentsService } from './assignments.service';
 
 
 
@@ -28,7 +29,13 @@ export class AppComponent {
   title = 'Application de gestion des devoirs à rendre (Assignments)';
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
-  constructor(private authService: AuthService,private router: Router) {}
+  constructor(private authService: AuthService,private router: Router, private assignmentsService: AssignmentsService) {}
+
+  genererDonneesDeTest() {
+    console.log("Peuplement de la BD avec données de test...");
+    this.assignmentsService.peuplerBD();
+  }
+   
 
   toggleLogin(): void {
     if (!this.authService.isLogged()) {

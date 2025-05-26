@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { Assignment } from './assignments/assignment.model';
 import { Observable,of  } from 'rxjs';
 import { LoggingService } from './logging.service';
+import { bdData } from './data';
+
+import { HttpClient } from '@angular/common/http';
+
 
 
 
@@ -9,64 +13,48 @@ import { LoggingService } from './logging.service';
   providedIn: 'root'
 })
 export class AssignmentsService {
-  private lastId = 3;
+   backendURL = 'http://localhost:8010/api/assignments';
 
-  assignments: Assignment[] = [
-    {
-      id:1,
-      nom: 'TP1 sur WebComponents, un lecteur audio amélioré',
-      dateDeRendu: new Date('2021-03-01'),
-      rendu: true
-    },
-    {
-      id:2,
-      nom: 'TP2 sur Angular, un joli gestionnaire de devoirs (Asseingments)',
-      dateDeRendu: new Date('2021-03-15'),
-      rendu: false
-    },
-    {
-      id:3,
-      nom: 'TP3 sur Angular, utilisation duu router et de ',
-      dateDeRendu: new Date('2021-03-15'),
-      rendu: false
-    }
-  ];
-
-  constructor(private loggingService:LoggingService) {}
+  constructor(private loggingService: LoggingService, private http: HttpClient) {}
 
   // Récupérer tous les assignments
   getAssignments(): Observable<Assignment[]> {
-    return of(this.assignments);
+    return this.http.get<Assignment[]>(this.backendURL);
   }
 
-  getAssignment(id:number):Observable<Assignment|undefined>{
-    const a:Assignment|undefined = this.assignments.find(a => a.id === id);
-    return of(a);
+  getAssignment(id: string): Observable<Assignment> {
+    return this.http.get<Assignment>(`${this.backendURL}/${id}`);
   }
 
   // Ajouter un nouvel assignment
-  addAssignment(assignment: Assignment): Observable<string> {
-    assignment.id = this.generateId();
-    this.assignments.push(assignment);
-    this.loggingService.log(assignment.nom, 'a été ajouté !');
-    return of('Assignment ajouté !');
+  addAssignment(assignment: Assignment): Observable<any> {
+    return this.http.post(this.backendURL, assignment);
   }
 
   // Supprimer un assignment
-  deleteAssignment(assignment: Assignment): Observable<string> {
-    this.assignments = this.assignments.filter(a => a !== assignment);
-    return of('Assignment supprimé !');
+  deleteAssignment(assignment: Assignment): Observable<any> {
+    return this.http.delete(`${this.backendURL}/${assignment.id}`);
   }
 
   // Mettre à jour un assignment
-  updateAssignment(assignment: Assignment): Observable<string> {
-    // Ici, on pourrait envoyer une requête PUT à une base de données
-    // Mais comme on travaille avec un tableau local, aucune action supplémentaire n'est nécessaire
-    return of("Assignment service: assignment modifié !");
+  updateAssignment(assignment: Assignment): Observable<any> {
+    return this.http.put(`${this.backendURL}/${assignment.id}`, assignment);
   }
 
-  private generateId(): number {
-    return ++this.lastId;
+  // Peupler la BD avec les données du fichier data.ts
+  peuplerBD() {
+    bdData.forEach(data => {
+      const assignment: Assignment = {
+        nom: data.nom,
+        dateDeRendu: new Date(data.dateDeRendu),
+        rendu: data.rendu
+      };
+
+      this.addAssignment(assignment).subscribe({
+        next: () => console.log(`Ajouté : ${assignment.nom}`),
+        error: err => console.error(`Erreur lors de l'ajout : ${assignment.nom}`, err)
+      });
+    });
   }
 
 

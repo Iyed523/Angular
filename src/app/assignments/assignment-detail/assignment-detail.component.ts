@@ -45,15 +45,21 @@ export class AssignmentDetailComponent {
     
 
   getAssignment() {
-    const id = +this.route.snapshot.params['id']; // Récupérer l'ID de l'URL
-    this.assignmentsService.getAssignment(id).subscribe((assignment) => {
-      if (assignment) {
-        this.assignmentTransmis = assignment; // Assigner seulement si assignment est défini
-      } else {
-        console.error('Assignment non trouvé'); // Gérer le cas où assignment est undefined
-      }
-    });
+  const id = this.route.snapshot.params['id'];
+  console.log("ID récupéré:", id); // Pour vérifier que c'est bien défini
+  if (!id) {
+    console.error("Aucun id trouvé dans l'URL");
+    return;
   }
+  this.assignmentsService.getAssignment(id).subscribe((assignment) => {
+    if (assignment) {
+      this.assignmentTransmis = assignment;
+    } else {
+      console.error('Assignment non trouvé');
+    }
+  });
+}
+
 
   onClickEdit() {
     this.router.navigate(["/assignment", this.assignmentTransmis.id, "edit"],

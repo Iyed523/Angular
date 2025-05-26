@@ -1,5 +1,5 @@
 export class Assignment{
-    id!:number;
+    id?:number;
     nom!:string;
     dateDeRendu!:Date;
     rendu!:boolean;

@@ -26,6 +26,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { LoginComponent } from './assignments/login/login.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 
@@ -60,7 +62,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatSlideToggleModule,
     LoginComponent,
     MatToolbarModule,
-    MatSidenavModule
+    MatSidenavModule,
+    HttpClientModule
 
     
 

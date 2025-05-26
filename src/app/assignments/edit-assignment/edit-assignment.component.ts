@@ -41,7 +41,7 @@ export class EditAssignmentComponent {
 
   ngOnInit(): void {
     // Récupérer l'ID de l'assignment depuis l'URL
-    const id = +this.route.snapshot.params['id'];
+    const id = this.route.snapshot.params['id'];
     this.assignmentsService.getAssignment(id).subscribe((assignment) => {
       if (assignment) {
         this.assignment = assignment;
@@ -75,7 +75,7 @@ export class EditAssignmentComponent {
   }
 
   getAssignment(): void {
-    const id = +this.route.snapshot.params['id'];
+    const id = this.route.snapshot.params['id'];    
     this.assignmentsService.getAssignment(id).subscribe((assignment) => {
       if (assignment) {
         this.assignment = assignment;
