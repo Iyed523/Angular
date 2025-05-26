@@ -8,8 +8,7 @@ mongoose.Promise = global.Promise;
 //mongoose.set('debug', true);
 
 // remplacer toute cette chaine par l'URI de connexion à votre propre base dans le cloud s
-//const uri = 'mongodb+srv://iyedloghmari:iDvcT7PbCYYJnQzi@cluster0.oixfyrw.mongodb.net/AngularDB?retryWrites=true&w=majority&appName=Cluster0';
-const uri = 'mongodb://localhost:27017/AngularDB'; // <-- MongoDB local
+const uri = 'mongodb+srv://iyedloghmari:iDvcT7PbCYYJnQzi@cluster0.oixfyrw.mongodb.net/AngularDB?retryWrites=true&w=majority&appName=Cluster0';
 
 
 const options = {
