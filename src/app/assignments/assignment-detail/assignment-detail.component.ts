@@ -45,7 +45,7 @@ export class AssignmentDetailComponent {
     
 
   getAssignment() {
-  const id = this.route.snapshot.params['id'];
+  const id = +this.route.snapshot.params['id'];
   console.log("ID récupéré:", id); // Pour vérifier que c'est bien défini
   if (!id) {
     console.error("Aucun id trouvé dans l'URL");
@@ -65,6 +65,8 @@ export class AssignmentDetailComponent {
     this.router.navigate(["/assignment", this.assignmentTransmis.id, "edit"],
       {queryParams: {nom: this.assignmentTransmis.nom,fragment: 'edition'}}
     );
+    console.log("ID assignment transmis:", this.assignmentTransmis.id);
+
   }
 
   isAdmin(): boolean {

@@ -44,7 +44,7 @@ async function postAssignment(req, res) {
 // Update d'un assignment (PUT) par 'id' personnalisé
 async function updateAssignment(req, res) {
   try {
-    const assignmentId = parseInt(req.body.id);
+    const assignmentId = parseInt(req.params.id); // <-- corriger ici
     if (isNaN(assignmentId)) return res.status(400).send('ID invalide');
 
     const updatedAssignment = await Assignment.findOneAndUpdate(
@@ -59,19 +59,31 @@ async function updateAssignment(req, res) {
   }
 }
 
+
 // suppression d'un assignment (DELETE) par 'id' personnalisé
 async function deleteAssignment(req, res) {
   try {
     const assignmentId = parseInt(req.params.id);
-    if (isNaN(assignmentId)) return res.status(400).send('ID invalide');
+    console.log("ID reçu pour suppression:", assignmentId);
 
-    const deletedAssignment = await Assignment.findOneAndRemove({ id: assignmentId });
-    if (!deletedAssignment) return res.status(404).send('Assignment not found');
+    if (isNaN(assignmentId)) {
+      console.log("ID invalide");
+      return res.status(400).send('ID invalide');
+    }
+
+    const deletedAssignment = await Assignment.findOneAndDelete({ id: assignmentId });
+    if (!deletedAssignment) {
+      console.log("Assignment non trouvé pour suppression avec id =", assignmentId);
+      return res.status(404).send('Assignment not found');
+    }
+    console.log(`${deletedAssignment.nom} supprimé avec succès.`);
     res.json({ message: `${deletedAssignment.nom} deleted` });
   } catch (err) {
+    console.error("Erreur lors de la suppression:", err);
     res.status(500).send(err.message);
   }
 }
+
 
 module.exports = {
   getAssignments,

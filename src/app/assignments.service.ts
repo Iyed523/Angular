@@ -22,7 +22,7 @@ export class AssignmentsService {
     return this.http.get<Assignment[]>(this.backendURL);
   }
 
-  getAssignment(id: string): Observable<Assignment> {
+  getAssignment(id: number): Observable<Assignment> {
     return this.http.get<Assignment>(`${this.backendURL}/${id}`);
   }
 
@@ -33,6 +33,8 @@ export class AssignmentsService {
 
   // Supprimer un assignment
   deleteAssignment(assignment: Assignment): Observable<any> {
+      console.log("Suppression de l'assignment avec ID :", assignment.id);
+
     return this.http.delete(`${this.backendURL}/${assignment.id}`);
   }
 
@@ -45,6 +47,7 @@ export class AssignmentsService {
   peuplerBD() {
     bdData.forEach(data => {
       const assignment: Assignment = {
+        id: data.id,
         nom: data.nom,
         dateDeRendu: new Date(data.dateDeRendu),
         rendu: data.rendu

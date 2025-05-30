@@ -49,12 +49,12 @@ app.route(prefix + '/assignments')
 
 app.route(prefix + '/assignments/:id')
   .get(assignment.getAssignment)
-  .delete(assignment.deleteAssignment);
+  .delete(assignment.deleteAssignment)
+  .put(assignment.updateAssignment);
 
 
 app.route(prefix + '/assignments')
-  .post(assignment.postAssignment)
-  .put(assignment.updateAssignment);
+  .post(assignment.postAssignment);
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Serveur démarré sur http://localhost:${port}/api/assignments`);

@@ -42,6 +42,12 @@ export class EditAssignmentComponent {
   ngOnInit(): void {
     // Récupérer l'ID de l'assignment depuis l'URL
     const id = this.route.snapshot.params['id'];
+    if (!id || isNaN(+id)) {
+    console.error("Paramètre ID invalide ou manquant :", id);
+    console.log("ID récupéré:", id); // Pour vérifier que c'est bien défini
+
+    return;
+  }
     this.assignmentsService.getAssignment(id).subscribe((assignment) => {
       if (assignment) {
         this.assignment = assignment;
@@ -50,7 +56,7 @@ export class EditAssignmentComponent {
       } 
     });
 
-    this.getAssignment();
+    //this.getAssignment();
     console.log("Query Params :");
     console.log(this.route.snapshot.queryParams);
     console.log("Fragment :");
@@ -75,7 +81,8 @@ export class EditAssignmentComponent {
   }
 
   getAssignment(): void {
-    const id = this.route.snapshot.params['id'];    
+    const id = +this.route.snapshot.params['id'];    
+
     this.assignmentsService.getAssignment(id).subscribe((assignment) => {
       if (assignment) {
         this.assignment = assignment;
