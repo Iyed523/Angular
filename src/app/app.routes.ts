@@ -5,12 +5,16 @@ import {AssignmentDetailComponent} from './assignments/assignment-detail/assignm
 import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assignment.component';
 import { authGuard } from './assignments/auth.guard';
 import { LoginComponent } from './assignments/login/login.component';
+import { getPrerenderParams } from './prerender'; 
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: AssignmentsComponent },
     { path: 'add', component: AddAssignmentComponent },
-    {path: 'assignment/:id', component: AssignmentDetailComponent},
+    {path: 'assignment/:id', component: AssignmentDetailComponent, data: {
+      prerender: true,
+      getPrerenderParams: getPrerenderParams
+    }},
     {path: 'assignment/:id/edit', component: EditAssignmentComponent, canActivate: [authGuard]},
     { path: 'login', component: LoginComponent }
 
