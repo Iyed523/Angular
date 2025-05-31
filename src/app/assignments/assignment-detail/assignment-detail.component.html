@@ -3,12 +3,17 @@
     <mat-card-content>
       <p>Date de rendu : {{ assignmentTransmis.dateDeRendu | date }}</p>
       <mat-checkbox
-        [checked]="assignmentTransmis.rendu"
-        (change)="onCheckboxChange()"
+      [(ngModel)]="assignmentTransmis.rendu"
+      (change)="onCheckboxChange()"
       >
-        Rendu
+      Rendu
       </mat-checkbox>
+
+       <p *ngIf="assignmentTransmis.rendu && assignmentTransmis.note !== undefined">
+          Note : <strong>{{ assignmentTransmis.note }}/20</strong>
+      </p>
     </mat-card-content>
+
     <mat-card-actions>
       <button mat-stroked-button color="primary" (click)="onClickEdit()" [disabled]="!isAdmin()">Edit</button>
       <button mat-stroked-button color="warn" (click)="onDelete()" [disabled]="!isAdmin()">Delete</button>

@@ -18,8 +18,8 @@ export class AssignmentsService {
   constructor(private loggingService: LoggingService, private http: HttpClient) {}
 
   // Récupérer tous les assignments
-  getAssignments(): Observable<Assignment[]> {
-    return this.http.get<Assignment[]>(this.backendURL);
+  getAssignments(page: number, limit: number): Observable<any> {
+    return this.http.get<any>(`${this.backendURL}?page=${page}&limit=${limit}`);
   }
 
   getAssignment(id: number): Observable<Assignment> {
@@ -50,7 +50,8 @@ export class AssignmentsService {
         id: data.id,
         nom: data.nom,
         dateDeRendu: new Date(data.dateDeRendu),
-        rendu: data.rendu
+        rendu: data.rendu,
+        note: data.note ?? undefined
       };
 
       this.addAssignment(assignment).subscribe({

@@ -12,7 +12,6 @@ const uri = 'mongodb+srv://iyedloghmari:iDvcT7PbCYYJnQzi@cluster0.oixfyrw.mongod
 
 
 const options = {
-  // plus besoin de useNewUrlParser ni useUnifiedTopology
 };
 
 

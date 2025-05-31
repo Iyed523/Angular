@@ -31,6 +31,7 @@ export class EditAssignmentComponent {
   nomAssignment = '';
   dateDeRendu?: Date = undefined;
   assignmentTransmis!: Assignment;
+  note?: number;
 
  
   constructor(
@@ -53,6 +54,8 @@ export class EditAssignmentComponent {
         this.assignment = assignment;
         this.nomAssignment = assignment.nom; // Initialiser le champ "nom"
         this.dateDeRendu = assignment.dateDeRendu; // Initialiser le champ "date de rendu"
+        this.note = assignment.note;
+
       } 
     });
 
@@ -70,7 +73,10 @@ export class EditAssignmentComponent {
     // on récupère les valeurs dans le formulaire
     this.assignment.nom = this.nomAssignment;
     this.assignment.dateDeRendu = this.dateDeRendu;
+    this.assignment.note = this.note;
+
     this.assignmentsService
+    
       .updateAssignment(this.assignment)
       .subscribe((message) => {
         console.log(message);

@@ -1,10 +1,21 @@
 let Assignment = require('../model/assignment');
 
-// Récupérer tous les assignments (GET)
+// Récupérer tous les assignments avec pagination
 async function getAssignments(req, res) {
   try {
-    const assignments = await Assignment.find();
-    res.json(assignments);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const skip = (page - 1) * limit;
+
+    const assignments = await Assignment.find().skip(skip).limit(limit);
+    const total = await Assignment.countDocuments();
+
+    res.json({
+      assignments,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit)
+    });
   } catch (err) {
     res.status(500).send(err.message);
   }
@@ -32,6 +43,7 @@ async function postAssignment(req, res) {
       nom: req.body.nom,
       dateDeRendu: req.body.dateDeRendu,
       rendu: req.body.rendu,
+      note: req.body.note,
     });
 
     await assignment.save();

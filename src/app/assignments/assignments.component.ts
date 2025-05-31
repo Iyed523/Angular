@@ -40,6 +40,10 @@ export class AssignmentsComponent implements OnInit {
 
   // Déclarer la propriété sans initialisation
   assignments!: Assignment[];
+  page: number = 1;
+  limit: number = 20;
+  totalPages: number = 1;
+  
 
   // Initialiser dans le constructeur
   constructor(private assignmentsService: AssignmentsService) {}
@@ -56,10 +60,14 @@ export class AssignmentsComponent implements OnInit {
     }, 2000);
   }
 
-  getAssignments(){
-    this.assignmentsService.getAssignments()
-      .subscribe(assignments => this.assignments = assignments);
-  }
+  getAssignments() {
+  this.assignmentsService.getAssignments(this.page, this.limit)
+    .subscribe(data => {
+      this.assignments = data.assignments;
+      this.totalPages = data.totalPages;
+    });
+}
+
   onSubmit() {
     const newAssignment = new Assignment();
     newAssignment.nom = this.nomDevoir;
@@ -86,6 +94,21 @@ export class AssignmentsComponent implements OnInit {
       this.assignmentSelectionne = null!;
     });
   }
+
+  nextPage() {
+    if (this.page < this.totalPages) {
+      this.page++;
+      this.getAssignments();
+    }
+  }
+
+  prevPage() {
+    if (this.page > 1) {
+      this.page--;
+      this.getAssignments();
+    }
+  }
+
  
  
   
@@ -97,6 +120,8 @@ export class AssignmentsComponent implements OnInit {
       return 'red';
     }
   }
+
+  
 
   onAddAssignmentBtnClick() {
     //this.formVisible = true;
@@ -110,6 +135,7 @@ export class AssignmentsComponent implements OnInit {
 
   }
     */
+   
 }
 
 
